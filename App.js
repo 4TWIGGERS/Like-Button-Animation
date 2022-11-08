@@ -14,8 +14,12 @@ import { View, Pressable, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
 const AnimatedButton = Animated.createAnimatedComponent(Pressable);
+
 const AnimatedPath = Animated.createAnimatedComponent(Path);
+
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
+
+const peachColor = "#F97777";
 
 export default function AnimatedStyleUpdateExample(props) {
   const scale = useSharedValue(0);
@@ -26,16 +30,16 @@ export default function AnimatedStyleUpdateExample(props) {
 
   const liked = useSharedValue(0);
 
-  const firstMotion = useSharedValue(75);
+  const xAxisFingerMotion = useSharedValue(75);
 
-  const secondMotion = useSharedValue(54);
+  const yAxisFingerMotion = useSharedValue(54);
 
   const fakeView = useSharedValue(1);
 
   const reunion = useSharedValue(0);
 
   const path = useDerivedValue(() => {
-    return `M43 54 56 54A1 1 0 0156 61 1 1 0 0155 68 1 1 0 0154 75C58 75 57 81 53 81L34 81Q27 78 27 70L27 58Q28 56 31 53  ${firstMotion.value} ${secondMotion.value} 41 54l9 0`;
+    return `M43 54 56 54A1 1 0 0156 61 1 1 0 0155 68 1 1 0 0154 75C58 75 57 81 53 81L34 81Q27 78 27 70L27 58Q28 56 31 53  ${xAxisFingerMotion.value} ${yAxisFingerMotion.value} 41 54l9 0`;
   });
 
   const pathProps = useAnimatedProps(() => {
@@ -63,14 +67,14 @@ export default function AnimatedStyleUpdateExample(props) {
   });
   const styleLike = useAnimatedStyle(() => {
     return {
-      color: interpolateColor(circle.value, [0, 1], ["#F97777", "white"]),
+      color: interpolateColor(circle.value, [0, 1], [peachColor, "white"]),
       opacity: interpolate(like.value, [0, 1], [0, 1]),
     };
   });
   const styleLiked = useAnimatedStyle(() => {
     return {
       zIndex: 6,
-      color: interpolateColor(circle.value, [0, 1], ["#F97777", "white"]),
+      color: interpolateColor(circle.value, [0, 1], [peachColor, "white"]),
       opacity: interpolate(liked.value, [0, 1], [0, 1]),
     };
   });
@@ -99,11 +103,11 @@ export default function AnimatedStyleUpdateExample(props) {
 
     liked.value = withDelay(1100, withTiming(1));
     like.value = withDelay(560, withTiming(0));
-    firstMotion.value = withDelay(200, withTiming(50, { duration: 600 }));
-    secondMotion.value = withDelay(200, withTiming(35, { duration: 600 }));
+    xAxisFingerMotion.value = withDelay(250, withTiming(50, { duration: 300 }));
+    yAxisFingerMotion.value = withDelay(250, withTiming(35, { duration: 300 }));
     reunion.value = withTiming(
       1,
-      { duration: 800, easing: Easing.bezier(0.47, -0.92, 0.42, 1.81) },
+      { duration: 700, easing: Easing.bezier(0.82, -1.45, 0.78, 1.95) },
       () => {
         circle.value = withTiming(1, { duration: 600 });
       }
